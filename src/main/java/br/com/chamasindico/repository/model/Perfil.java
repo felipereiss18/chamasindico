@@ -8,7 +8,7 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name = "tb_perfil", schema = "chama_sindico")
-public class Perfil implements Serializable {
+public class Perfil extends EntityAbstract<Long> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
