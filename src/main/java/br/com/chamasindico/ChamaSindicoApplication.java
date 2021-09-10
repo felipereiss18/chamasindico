@@ -11,13 +11,13 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 @SpringBootApplication
-public class ChamasindicoApplication {
+public class ChamaSindicoApplication {
 
     @Autowired
     private MessageSource messageSource;
 
     public static void main(String[] args) {
-        SpringApplication.run(ChamasindicoApplication.class, args);
+        SpringApplication.run(ChamaSindicoApplication.class, args);
     }
 
     @PostConstruct

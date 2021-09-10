@@ -20,4 +20,7 @@ public class Perfil extends EntityAbstract<Long> implements Serializable {
     @Column(name = "descricao", nullable = false)
     private String descricao;
 
+    @Column(name = "role", nullable = false)
+    private String role;
+
 }

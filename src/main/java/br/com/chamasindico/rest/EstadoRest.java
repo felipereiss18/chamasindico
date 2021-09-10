@@ -2,8 +2,8 @@ package br.com.chamasindico.rest;
 
 import br.com.chamasindico.dto.arquitetura.ResponseDTO;
 import br.com.chamasindico.dto.model.EstadoDTO;
+import br.com.chamasindico.security.annotation.RoleGlobal;
 import br.com.chamasindico.service.EstadoService;
-import br.com.chamasindico.utils.Converter;
 import br.com.chamasindico.utils.ConverterUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +23,7 @@ public class EstadoRest {
     @Autowired
     private EstadoService service;
 
+    @RoleGlobal
     @GetMapping
     @Transactional(readOnly = true)
     public ResponseEntity<ResponseDTO> buscar(){
@@ -34,6 +35,7 @@ public class EstadoRest {
         return ResponseEntity.ok(new ResponseDTO(list));
     }
 
+    @RoleGlobal
     @GetMapping("{id}")
     @Transactional(readOnly = true)
     public ResponseEntity<ResponseDTO> buscarPorId(@PathVariable String id){

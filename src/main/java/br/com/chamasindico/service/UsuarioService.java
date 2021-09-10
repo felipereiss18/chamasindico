@@ -54,4 +54,25 @@ public class UsuarioService
             throw new ChamaSindicoException("erro.persistir");
         }
     }
+
+    @Override
+    public Usuario editar(Usuario usuario) {
+
+
+
+        return super.editar(usuario);
+    }
+
+    public void trocarSenha(Long id, String atual, String nova) {
+
+        Usuario usuario = super.buscarPorId(id);
+
+        if(usuario.getSenha().equals(passwordEncoder.encode(atual))) {
+            usuario.setSenha(passwordEncoder.encode(nova));
+
+            super.salvar(usuario);
+        }else {
+            throw new ChamaSindicoException("erro.senhaatual");
+        }
+    }
 }

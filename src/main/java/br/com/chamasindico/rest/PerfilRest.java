@@ -2,6 +2,8 @@ package br.com.chamasindico.rest;
 
 import br.com.chamasindico.dto.arquitetura.ResponseDTO;
 import br.com.chamasindico.dto.model.PerfilDTO;
+import br.com.chamasindico.security.annotation.RoleAdmin;
+import br.com.chamasindico.security.annotation.RoleSindico;
 import br.com.chamasindico.service.PerfilService;
 import br.com.chamasindico.utils.ConverterUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class PerfilRest {
     @Autowired
     private PerfilService service;
 
+    @RoleAdmin
+    @RoleSindico
     @GetMapping
     @Transactional(readOnly = true)
     public ResponseEntity<ResponseDTO> buscar(){
@@ -33,6 +37,8 @@ public class PerfilRest {
         return ResponseEntity.ok(new ResponseDTO(list));
     }
 
+    @RoleAdmin
+    @RoleSindico
     @GetMapping("{id}")
     @Transactional(readOnly = true)
     public ResponseEntity<ResponseDTO> buscarPorId(@PathVariable Long id){
