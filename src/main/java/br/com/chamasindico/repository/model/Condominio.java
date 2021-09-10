@@ -4,11 +4,12 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Data
 @Entity
 @Table(name = "tb_condominio", schema = "chama_sindico")
-public class Condominio implements Serializable {
+public class Condominio extends EntityAbstract<Long> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -35,8 +36,14 @@ public class Condominio implements Serializable {
     @Column(name = "complemento", nullable = false)
     private String complemento;
 
+    @Column(name = "cidade")
+    private String cidade;
+
     @ManyToOne
     @JoinColumn(name = "id_estado", nullable = false)
     private Estado estado;
+
+    @OneToMany(orphanRemoval = true, mappedBy = "id.condominio")
+    private Set<Bloco> blocos;
 
 }

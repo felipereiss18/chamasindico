@@ -38,7 +38,7 @@ public class UserPrincipal implements UserDetails {
 
 	public static UserPrincipal create(Usuario usuario) {
 
-		List<GrantedAuthority> authorities = Stream.of(new SimpleGrantedAuthority("ADMIN"))
+		List<GrantedAuthority> authorities = Stream.of(new SimpleGrantedAuthority(usuario.getPerfil().getRole()))
 				.collect(Collectors.toList());
 
 		return new UserPrincipal(usuario.getId(), usuario.getNome(), usuario.getSenha(), authorities);
