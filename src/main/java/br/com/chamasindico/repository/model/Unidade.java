@@ -1,11 +1,18 @@
 package br.com.chamasindico.repository.model;
 
-import lombok.Data;
+import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "tb_unidade", schema = "chama_sindico")
 public class Unidade implements Serializable {
@@ -15,20 +22,13 @@ public class Unidade implements Serializable {
     @EmbeddedId
     private UnidadePK id;
 
-    @ManyToOne
-    @JoinColumns(value = {
-            @JoinColumn(name = "id_bloco", insertable = false, updatable = false),
-            @JoinColumn(name = "id_condominio", insertable = false, updatable = false)
-    })
-    private Bloco bloco;
-
     @Column(name = "metragem")
     private Integer metragem;
 
     @Column(name = "qtd_quarto")
-    private Integer qtdQuarto;
+    private Integer quartos;
 
     @Column(name = "qtd_banheiro")
-    private Integer qtdBanheiro;
+    private Integer banheiros;
 
 }

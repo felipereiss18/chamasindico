@@ -1,17 +1,24 @@
 package br.com.chamasindico.repository.model;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import lombok.*;
+
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Embeddable
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UnidadePK implements Serializable {
 
     private Long id;
 
-    @Column(name = "id_bloco")
-    private String idBloco;
-
-    @Column(name = "id_condominio")
-    private Long idCondominio;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumns(value = {
+            @JoinColumn(name = "id_condominio"),
+            @JoinColumn(name = "id_bloco")
+    })
+    private Bloco bloco;
 }

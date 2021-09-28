@@ -15,6 +15,7 @@
     <description>Chama Sindico - Sistema de Mensageria Predial</description>
     <properties>
         <java.version>11</java.version>
+        <querydsl.version>5.0.0</querydsl.version>
     </properties>
     <dependencies>
         <dependency>
@@ -100,6 +101,19 @@
             <version>2.9.2</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-apt</artifactId>
+            <version>${querydsl.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-jpa</artifactId>
+            <version>${querydsl.version}</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -183,6 +197,22 @@
                             <enableDirtyTracking>true</enableDirtyTracking>
                             <enableAssociationManagement>true</enableAssociationManagement>
                             <enableExtendedEnhancement>false</enableExtendedEnhancement>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.mysema.maven</groupId>
+                <artifactId>apt-maven-plugin</artifactId>
+                <version>1.1.3</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>process</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>target/generated-sources</outputDirectory>
+                            <processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>
                         </configuration>
                     </execution>
                 </executions>

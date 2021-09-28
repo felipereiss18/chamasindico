@@ -20,7 +20,9 @@ public class CondominioDTO {
     private String endereco;
     private String bairro;
     private String complemento;
+    private String numero;
     private String cidade;
+    private boolean situacao;
     private EstadoDTO estado;
-    private List<String> blocos;
+    private List<BlocoDTO> blocos;
 }

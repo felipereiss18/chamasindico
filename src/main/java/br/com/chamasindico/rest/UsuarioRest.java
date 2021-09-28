@@ -27,8 +27,6 @@ public class UsuarioRest {
     @Autowired
     private UsuarioService service;
 
-    @RoleAdmin
-    @RoleSindico
     @PostMapping
     public ResponseEntity<ResponseDTO> salvar(@Valid @RequestBody UsuarioDTO dto){
 

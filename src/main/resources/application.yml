@@ -2,6 +2,8 @@ spring:
   devtools:
     livereload:
       enabled: true
+    restart:
+      enabled: true
   web:
     locale: pt_BR
     hiddenmethod:
@@ -20,8 +22,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
-    show-sql: true
     generate-ddl: false
+    show-sql: true
   jackson:
     serialization:
       WRITE_DATES_AS_TIMESTAMPS: false
@@ -30,7 +32,18 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/chama_sindico
     username: root
-    password: root
+    password: mysql
+
+    hikari:
+      validation-timeout: 300000
+
+# logs the SQL statements
+logging:
+  level:
+    org:
+      hibernate:
+        sql: debug
+        type: trace
 
 server:
   servlet:

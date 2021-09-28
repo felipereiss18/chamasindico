@@ -1,11 +1,16 @@
 package br.com.chamasindico.repository.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "tb_bloco", schema = "chama_sindico")
 public class Bloco implements Serializable {
@@ -14,5 +19,8 @@ public class Bloco implements Serializable {
 
     @EmbeddedId
     private BlocoPK id;
+
+    @OneToMany(mappedBy = "id.bloco", cascade = {CascadeType.ALL, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
+    private Set<Unidade> unidades;
 
 }
