@@ -1,6 +1,8 @@
 package br.com.chamasindico.repository.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +11,8 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "tb_estado", schema = "chama_sindico")
 public class Estado extends EntityAbstract<String> implements Serializable {

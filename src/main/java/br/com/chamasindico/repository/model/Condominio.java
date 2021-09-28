@@ -1,12 +1,18 @@
 package br.com.chamasindico.repository.model;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "tb_condominio", schema = "chama_sindico")
 public class Condominio extends EntityAbstract<Long> implements Serializable {
@@ -30,6 +36,9 @@ public class Condominio extends EntityAbstract<Long> implements Serializable {
     @Column(name = "endereco", nullable = false)
     private String endereco;
 
+    @Column(name = "numero", nullable = false)
+    private String numero;
+
     @Column(name = "bairro", nullable = false)
     private String bairro;
 
@@ -39,6 +48,9 @@ public class Condominio extends EntityAbstract<Long> implements Serializable {
     @Column(name = "cidade")
     private String cidade;
 
+    @Column(name = "situacao")
+    private Boolean situacao;
+
     @ManyToOne
     @JoinColumn(name = "id_estado", nullable = false)
     private Estado estado;
@@ -46,4 +58,7 @@ public class Condominio extends EntityAbstract<Long> implements Serializable {
     @OneToMany(orphanRemoval = true, mappedBy = "id.condominio")
     private Set<Bloco> blocos;
 
+    public Condominio(Long id) {
+        this.id = id;
+    }
 }
