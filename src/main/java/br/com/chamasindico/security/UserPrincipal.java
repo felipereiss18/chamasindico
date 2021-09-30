@@ -1,5 +1,6 @@
 package br.com.chamasindico.security;
 
+import br.com.chamasindico.repository.model.Perfil;
 import br.com.chamasindico.repository.model.Usuario;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -30,6 +31,8 @@ public class UserPrincipal implements UserDetails {
 	@JsonIgnore
 	private String password;
 
+	private Perfil perfil;
+
 	private Collection<? extends GrantedAuthority> authorities;
 
 	public UserPrincipal(Long id){
@@ -41,7 +44,7 @@ public class UserPrincipal implements UserDetails {
 		List<GrantedAuthority> authorities = Stream.of(new SimpleGrantedAuthority(usuario.getPerfil().getRole()))
 				.collect(Collectors.toList());
 
-		return new UserPrincipal(usuario.getId(), usuario.getNome(), usuario.getSenha(), authorities);
+		return new UserPrincipal(usuario.getId(), usuario.getNome(), usuario.getSenha(), usuario.getPerfil(),authorities);
 	}
 
 	@Override

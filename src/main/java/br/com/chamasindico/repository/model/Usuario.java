@@ -1,11 +1,18 @@
 package br.com.chamasindico.repository.model;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
-@Data
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "tb_usuario", schema = "chama_sindico")
 public class Usuario extends EntityAbstract<Long> implements Serializable{
@@ -26,5 +33,14 @@ public class Usuario extends EntityAbstract<Long> implements Serializable{
 
     @Column(name = "senha", nullable = false)
     private String senha;
+
+    @Column(name = "situacao")
+    private Boolean situacao;
+
+    @OneToMany(mappedBy = "usuario")
+    private Set<Proprietario> proprietarios;
+
+    @OneToMany(mappedBy = "usuario")
+    private Set<Inquilino> inquilinos;
 
 }

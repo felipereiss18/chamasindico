@@ -11,4 +11,5 @@ public class PerfilDTO {
 
     private Long id;
     private String descricao;
+    private String role;
 }

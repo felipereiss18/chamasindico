@@ -13,4 +13,5 @@ public class UsuarioDTO {
     private PerfilDTO perfil;
     private String nome;
     private String senha;
+    private boolean situacao;
 }

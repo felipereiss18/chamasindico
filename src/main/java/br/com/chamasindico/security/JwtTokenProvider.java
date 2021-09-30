@@ -1,5 +1,7 @@
 package br.com.chamasindico.security;
 
+import br.com.chamasindico.dto.model.PerfilDTO;
+import br.com.chamasindico.utils.ConverterUtil;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +44,7 @@ public class JwtTokenProvider {
                 .claim("username", userPrincipal.getUsername())
                 .claim("role", role)
 		        .claim("nome", userPrincipal.getUsername())
+                .claim("perfil", ConverterUtil.converterToDTO(userPrincipal.getPerfil(), PerfilDTO.class))
                 .setExpiration(expiryDate)
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
