@@ -1,11 +1,17 @@
 package br.com.chamasindico.repository.model;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Data
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "tb_perfil", schema = "chama_sindico")
 public class Perfil extends EntityAbstract<Long> implements Serializable {

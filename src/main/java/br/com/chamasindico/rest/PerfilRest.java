@@ -3,6 +3,7 @@ package br.com.chamasindico.rest;
 import br.com.chamasindico.dto.arquitetura.ResponseDTO;
 import br.com.chamasindico.dto.model.PerfilDTO;
 import br.com.chamasindico.security.annotation.RoleAdmin;
+import br.com.chamasindico.security.annotation.RoleGlobal;
 import br.com.chamasindico.security.annotation.RoleSindico;
 import br.com.chamasindico.service.PerfilService;
 import br.com.chamasindico.utils.ConverterUtil;
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("perfis")
+@RequestMapping("perfil")
 public class PerfilRest {
 
     @Autowired
@@ -44,5 +45,14 @@ public class PerfilRest {
     public ResponseEntity<ResponseDTO> buscarPorId(@PathVariable Long id){
         PerfilDTO perfilDTO = ConverterUtil.converterToDTO(service.buscarPorId(id), PerfilDTO.class);
         return ResponseEntity.ok(new ResponseDTO(perfilDTO));
+    }
+
+    @RoleGlobal
+    @GetMapping("role/{role}")
+    @Transactional(readOnly = true)
+    public ResponseEntity<ResponseDTO> buscarPorRole(@PathVariable String role) {
+        PerfilDTO dto = ConverterUtil.converterToDTO(service.buscarPorRole(role), PerfilDTO.class);
+
+        return ResponseEntity.ok(new ResponseDTO(dto));
     }
 }
