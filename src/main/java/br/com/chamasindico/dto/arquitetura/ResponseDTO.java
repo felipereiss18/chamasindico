@@ -2,12 +2,14 @@ package br.com.chamasindico.dto.arquitetura;
 
 import br.com.chamasindico.utils.MessageUtil;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class ResponseDTO {
 
     private Object data;

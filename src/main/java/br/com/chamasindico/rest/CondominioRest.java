@@ -1,6 +1,7 @@
 package br.com.chamasindico.rest;
 
 import br.com.chamasindico.dto.arquitetura.ResponseDTO;
+import br.com.chamasindico.dto.model.BlocoDTO;
 import br.com.chamasindico.dto.model.CondominioDTO;
 import br.com.chamasindico.dto.model.EstadoDTO;
 import br.com.chamasindico.dto.pesquisa.CondominioPesqReqDTO;
@@ -8,6 +9,7 @@ import br.com.chamasindico.dto.pesquisa.CondominioPesqRespDTO;
 import br.com.chamasindico.repository.model.Condominio;
 import br.com.chamasindico.repository.model.Estado;
 import br.com.chamasindico.security.annotation.RoleAdmin;
+import br.com.chamasindico.security.annotation.RoleGlobal;
 import br.com.chamasindico.service.CondominioService;
 import br.com.chamasindico.utils.Converter;
 import br.com.chamasindico.utils.ConverterUtil;
@@ -110,5 +112,17 @@ public class CondominioRest {
         service.alterarSituacao(id, situacao);
 
         return ResponseEntity.ok(new ResponseDTO());
+    }
+
+    @RoleGlobal
+    @GetMapping("{id}/blocos")
+    @Transactional(readOnly = true)
+    public ResponseEntity<ResponseDTO> buscarBlocos(@PathVariable Long id) {
+        Condominio condominio = service.buscarPorId(id);
+
+        List<BlocoDTO> lista =
+                condominio.getBlocos().stream().map(b -> new BlocoDTO(b.getId().getId())).collect(Collectors.toList());
+
+        return ResponseEntity.ok(new ResponseDTO(lista));
     }
 }

@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.OptionalLong;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -33,6 +34,8 @@ public class UserPrincipal implements UserDetails {
 
 	private Perfil perfil;
 
+	private Long condominio;
+
 	private Collection<? extends GrantedAuthority> authorities;
 
 	public UserPrincipal(Long id){
@@ -44,7 +47,26 @@ public class UserPrincipal implements UserDetails {
 		List<GrantedAuthority> authorities = Stream.of(new SimpleGrantedAuthority(usuario.getPerfil().getRole()))
 				.collect(Collectors.toList());
 
-		return new UserPrincipal(usuario.getId(), usuario.getNome(), usuario.getSenha(), usuario.getPerfil(),authorities);
+		Long condominio = null;
+		if (!usuario.getInquilinos().isEmpty()) {
+			OptionalLong first = usuario.getInquilinos().stream()
+					.mapToLong(i -> i.getAluguel().getUnidade().getId().getBloco().getId().getCondominio().getId())
+					.findFirst();
+
+			if(first.isPresent()){
+				condominio = first.getAsLong();
+			}
+		}else if (!usuario.getProprietarios().isEmpty()) {
+			OptionalLong first = usuario.getProprietarios().stream()
+					.mapToLong(p -> p.getUnidade().getId().getBloco().getId().getCondominio().getId())
+					.findFirst();
+			if (first.isPresent()) {
+				condominio = first.getAsLong();
+			}
+		}
+
+		return new UserPrincipal(
+				usuario.getId(), usuario.getNome(), usuario.getSenha(), usuario.getPerfil(), condominio, authorities);
 	}
 
 	@Override

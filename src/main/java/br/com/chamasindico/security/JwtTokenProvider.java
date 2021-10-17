@@ -45,6 +45,7 @@ public class JwtTokenProvider {
                 .claim("role", role)
 		        .claim("nome", userPrincipal.getUsername())
                 .claim("perfil", ConverterUtil.converterToDTO(userPrincipal.getPerfil(), PerfilDTO.class))
+                .claim("condominio", userPrincipal.getCondominio())
                 .setExpiration(expiryDate)
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
