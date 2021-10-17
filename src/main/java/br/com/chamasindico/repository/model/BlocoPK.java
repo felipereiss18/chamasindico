@@ -1,9 +1,6 @@
 package br.com.chamasindico.repository.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
@@ -13,6 +10,7 @@ import java.io.Serializable;
 @Embeddable
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class BlocoPK implements Serializable {
