@@ -1,5 +1,6 @@
 package br.com.chamasindico.repository.model;
 
+import com.querydsl.core.annotations.QueryInit;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -20,6 +21,7 @@ public class Unidade implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @EmbeddedId
+    @QueryInit({"bloco.id", "bloco.id.condominio"})
     private UnidadePK id;
 
     @Column(name = "metragem")
@@ -31,4 +33,7 @@ public class Unidade implements Serializable {
     @Column(name = "qtd_banheiro")
     private Integer banheiros;
 
+    public Unidade(UnidadePK id) {
+        this.id = id;
+    }
 }

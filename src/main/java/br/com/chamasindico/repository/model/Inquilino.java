@@ -14,7 +14,7 @@ public class Inquilino implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id_usuario", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -22,7 +22,8 @@ public class Inquilino implements Serializable {
     @JoinColumn(name = "id_aluguel", nullable = false)
     private Aluguel aluguel;
 
-    @ManyToOne
+    @OneToOne
+    @MapsId
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
 
