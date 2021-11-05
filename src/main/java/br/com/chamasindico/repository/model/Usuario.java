@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
 
 @Setter
 @Getter
@@ -37,10 +36,26 @@ public class Usuario extends EntityAbstract<Long> implements Serializable{
     @Column(name = "situacao")
     private Boolean situacao;
 
-    @OneToMany(mappedBy = "usuario")
-    private Set<Proprietario> proprietarios;
+    @OneToOne(mappedBy = "usuario")
+    private Proprietario proprietario;
 
-    @OneToMany(mappedBy = "usuario")
-    private Set<Inquilino> inquilinos;
+    @OneToOne(mappedBy = "usuario")
+    private Inquilino inquilino;
 
+    public Usuario(Perfil perfil, String nome, String senha, Boolean situacao, Proprietario proprietario) {
+        this.perfil = perfil;
+        this.nome = nome;
+        this.senha = senha;
+        this.situacao = situacao;
+        this.proprietario = proprietario;
+    }
+
+    public Usuario(Long id, Perfil perfil, String nome, String senha, Boolean situacao, Proprietario proprietario) {
+        this.id = id;
+        this.perfil = perfil;
+        this.nome = nome;
+        this.senha = senha;
+        this.situacao = situacao;
+        this.proprietario = proprietario;
+    }
 }

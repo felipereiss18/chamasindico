@@ -1,6 +1,7 @@
 package br.com.chamasindico.repository.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +16,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_estado", schema = "chama_sindico")
+@Builder
 public class Estado extends EntityAbstract<String> implements Serializable {
 
     private static final long serialVersionUID = 1L;

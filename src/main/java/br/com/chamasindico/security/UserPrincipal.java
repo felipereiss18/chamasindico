@@ -13,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.OptionalLong;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -48,21 +47,15 @@ public class UserPrincipal implements UserDetails {
 				.collect(Collectors.toList());
 
 		Long condominio = null;
-		if (!usuario.getInquilinos().isEmpty()) {
-			OptionalLong first = usuario.getInquilinos().stream()
-					.mapToLong(i -> i.getAluguel().getUnidade().getId().getBloco().getId().getCondominio().getId())
-					.findFirst();
+		if (usuario.getInquilino() != null) {
+			condominio = usuario.getInquilino()
+					.getAluguel()
+					.getUnidade().getId()
+					.getBloco().getId()
+					.getCondominio().getId();
 
-			if(first.isPresent()){
-				condominio = first.getAsLong();
-			}
-		}else if (!usuario.getProprietarios().isEmpty()) {
-			OptionalLong first = usuario.getProprietarios().stream()
-					.mapToLong(p -> p.getUnidade().getId().getBloco().getId().getCondominio().getId())
-					.findFirst();
-			if (first.isPresent()) {
-				condominio = first.getAsLong();
-			}
+		}else if (usuario.getProprietario() != null) {
+			condominio = usuario.getProprietario().getUnidade().getId().getBloco().getId().getCondominio().getId();
 		}
 
 		return new UserPrincipal(

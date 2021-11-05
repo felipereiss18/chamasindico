@@ -15,7 +15,7 @@ import java.util.Set;
 @Builder
 @Entity
 @Table(name = "tb_bloco", schema = "chama_sindico")
-public class Bloco implements Serializable {
+public class Bloco extends EntityAbstract<BlocoPK> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -25,4 +25,7 @@ public class Bloco implements Serializable {
     @OneToMany(mappedBy = "id.bloco", cascade = {CascadeType.ALL, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     private Set<Unidade> unidades;
 
+    public Bloco(BlocoPK id) {
+        this.id = id;
+    }
 }

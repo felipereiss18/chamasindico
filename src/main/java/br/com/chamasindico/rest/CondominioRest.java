@@ -1,16 +1,16 @@
 package br.com.chamasindico.rest;
 
 import br.com.chamasindico.dto.arquitetura.ResponseDTO;
-import br.com.chamasindico.dto.model.BlocoDTO;
-import br.com.chamasindico.dto.model.CondominioDTO;
-import br.com.chamasindico.dto.model.EstadoDTO;
+import br.com.chamasindico.dto.model.*;
 import br.com.chamasindico.dto.pesquisa.CondominioPesqReqDTO;
 import br.com.chamasindico.dto.pesquisa.CondominioPesqRespDTO;
 import br.com.chamasindico.repository.model.Condominio;
 import br.com.chamasindico.repository.model.Estado;
+import br.com.chamasindico.repository.model.Proprietario;
 import br.com.chamasindico.security.annotation.RoleAdmin;
 import br.com.chamasindico.security.annotation.RoleGlobal;
 import br.com.chamasindico.service.CondominioService;
+import br.com.chamasindico.service.ProprietarioService;
 import br.com.chamasindico.utils.Converter;
 import br.com.chamasindico.utils.ConverterUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +31,8 @@ public class CondominioRest {
     @Autowired
     private CondominioService service;
 
+    @Autowired
+    private ProprietarioService proprietarioService;
 
     @RoleAdmin
     @PostMapping
@@ -124,5 +126,24 @@ public class CondominioRest {
                 condominio.getBlocos().stream().map(b -> new BlocoDTO(b.getId().getId())).collect(Collectors.toList());
 
         return ResponseEntity.ok(new ResponseDTO(lista));
+    }
+
+    @RoleGlobal
+    @GetMapping("{id}/sindico")
+    @Transactional(readOnly = true)
+    public ResponseEntity<ResponseDTO> buscarSindico(@PathVariable Long id) {
+        Proprietario proprietario = proprietarioService.buscarSindicoPorCondominio(id);
+
+        ProprietarioDTO dto = ProprietarioDTO.builder()
+                .nome(proprietario.getNome())
+                .usuario(UsuarioDTO.builder().id(proprietario.getUsuario().getId()).build())
+                .condominio(CondominioDTO.builder()
+                        .id(proprietario.getCondominio().getId())
+                        .nome(proprietario.getCondominio().getNome())
+                        .build()
+                )
+                .build();
+
+        return ResponseEntity.ok(new ResponseDTO(dto));
     }
 }

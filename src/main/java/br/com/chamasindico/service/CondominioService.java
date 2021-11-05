@@ -8,7 +8,10 @@ import com.querydsl.core.BooleanBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CondominioService extends ServiceAbstract<Condominio, CondominioRepository> {
@@ -91,5 +94,10 @@ public class CondominioService extends ServiceAbstract<Condominio, CondominioRep
         condominio.setSituacao(situacao);
 
         super.salvar(condominio);
+    }
+
+    @Override
+    public List<Condominio> listar() {
+        return repository.findAll(Sort.by(Sort.Direction.ASC, "nome"));
     }
 }
