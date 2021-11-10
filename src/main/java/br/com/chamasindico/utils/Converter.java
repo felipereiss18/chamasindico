@@ -5,6 +5,7 @@ import br.com.chamasindico.dto.pesquisa.AreaComumPesqRespDTO;
 import br.com.chamasindico.repository.model.*;
 
 import java.util.Comparator;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Converter {
@@ -169,6 +170,35 @@ public class Converter {
                                 .collect(Collectors.toList())
                 )
                 .situacao(areaComum.getSituacao())
+                .build();
+    }
+
+    public static AluguelDTO aluguelToDTO(Aluguel aluguel){
+
+        Optional<Inquilino> optionalInquilino = aluguel.getInquilinos().stream().findFirst();
+
+        InquilinoDTO inquilinoDTO = null;
+        if (optionalInquilino.isPresent()) {
+           inquilinoDTO = InquilinoDTO.builder()
+                   .cpf(optionalInquilino.get().getCpf())
+                   .nome(optionalInquilino.get().getNome())
+                   .email(optionalInquilino.get().getEmail())
+                   .nascimento(optionalInquilino.get().getNascimento())
+                   .telefone(optionalInquilino.get().getTelefone())
+                   .usuario(UsuarioDTO.builder()
+                           .id(optionalInquilino.get().getUsuario().getId())
+                           .nome(optionalInquilino.get().getUsuario().getNome())
+                           .situacao(optionalInquilino.get().getUsuario().getSituacao())
+                           .build()
+                   )
+                   .build();
+        }
+
+        return AluguelDTO.builder()
+                .dataFim(aluguel.getFim())
+                .dataInicio(aluguel.getInicio())
+                .id(aluguel.getId())
+                .inquilino(inquilinoDTO)
                 .build();
     }
 }
