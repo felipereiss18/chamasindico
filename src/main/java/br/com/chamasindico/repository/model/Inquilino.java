@@ -1,12 +1,16 @@
 package br.com.chamasindico.repository.model;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "tb_inquilino", schema = "chama_sindico")
 public class Inquilino implements Serializable {

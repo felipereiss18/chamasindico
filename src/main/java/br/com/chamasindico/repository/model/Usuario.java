@@ -58,4 +58,13 @@ public class Usuario extends EntityAbstract<Long> implements Serializable{
         this.situacao = situacao;
         this.proprietario = proprietario;
     }
+
+    public Usuario(Long id, Perfil perfil, String nome, String senha, Boolean situacao, Inquilino inquilino) {
+        this.id = id;
+        this.perfil = perfil;
+        this.nome = nome;
+        this.senha = senha;
+        this.situacao = situacao;
+        this.inquilino = inquilino;
+    }
 }
