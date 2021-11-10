@@ -33,6 +33,24 @@ public class Unidade implements Serializable {
     @Column(name = "qtd_banheiro")
     private Integer banheiros;
 
+    @Column(name = "garagem")
+    private String garagem;
+
+    @Column(name = "placa")
+    private String placa;
+
+    @Column(name = "marca")
+    private String marca;
+
+    @Column(name = "modelo")
+    private String modelo;
+
+    @Column(name = "ano_fabricacao")
+    private Integer anoFabricacao;
+
+    @Column(name = "ano_modelo")
+    private Integer anoModelo;
+
     public Unidade(UnidadePK id) {
         this.id = id;
     }
