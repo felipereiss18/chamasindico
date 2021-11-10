@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Builder
 @Entity
 @Table(name = "tb_unidade", schema = "chama_sindico")
-public class Unidade implements Serializable {
+public class Unidade extends EntityAbstract<UnidadePK> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
