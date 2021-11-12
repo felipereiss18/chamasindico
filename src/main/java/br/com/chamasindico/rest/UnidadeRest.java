@@ -6,7 +6,9 @@ import br.com.chamasindico.dto.model.AluguelDTO;
 import br.com.chamasindico.dto.model.UnidadeDTO;
 import br.com.chamasindico.dto.pesquisa.UnidadePesqReqDTO;
 import br.com.chamasindico.dto.pesquisa.UnidadePesqRespDTO;
+import br.com.chamasindico.enums.Roles;
 import br.com.chamasindico.repository.model.*;
+import br.com.chamasindico.security.UserPrincipal;
 import br.com.chamasindico.security.annotation.RoleAdmin;
 import br.com.chamasindico.security.annotation.RoleGlobal;
 import br.com.chamasindico.security.annotation.RoleSindico;
@@ -18,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +42,13 @@ public class UnidadeRest {
     @PostMapping("pesquisar")
     @Transactional(readOnly = true)
     public ResponseEntity<ResponseDTO> pesquisar(@RequestBody UnidadePesqReqDTO dto, @PageableDefault Pageable page){
+
+        UserPrincipal principal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (!principal.getPerfil().getRole().equals(Roles.ADMIN.getRole())){
+            dto.setIdCondominio(principal.getCondominio());
+        }
+
         Unidade unidade = Unidade
                 .builder()
                 .id(UnidadePK

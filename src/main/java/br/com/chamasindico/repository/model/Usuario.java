@@ -42,6 +42,9 @@ public class Usuario extends EntityAbstract<Long> implements Serializable{
     @OneToOne(mappedBy = "usuario")
     private Inquilino inquilino;
 
+    @OneToOne(mappedBy = "usuario")
+    private Funcionario funcionario;
+
     public Usuario(Perfil perfil, String nome, String senha, Boolean situacao, Proprietario proprietario) {
         this.perfil = perfil;
         this.nome = nome;
@@ -66,5 +69,20 @@ public class Usuario extends EntityAbstract<Long> implements Serializable{
         this.senha = senha;
         this.situacao = situacao;
         this.inquilino = inquilino;
+    }
+
+    public Usuario(Perfil perfil, String nome, String senha, Boolean situacao) {
+        this.perfil = perfil;
+        this.nome = nome;
+        this.senha = senha;
+        this.situacao = situacao;
+    }
+
+    public Usuario(Long id, Perfil perfil, String nome, String senha, Boolean situacao) {
+        this.id = id;
+        this.perfil = perfil;
+        this.nome = nome;
+        this.senha = senha;
+        this.situacao = situacao;
     }
 }

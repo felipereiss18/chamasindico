@@ -132,6 +132,7 @@ public class UsuarioRest {
     }
 
     @RoleAdmin
+    @RoleSindico
     @PatchMapping("{id}/situacao")
     public ResponseEntity<ResponseDTO> alterarSituacao(@PathVariable Long id, @RequestBody boolean situacao) {
 
