@@ -45,6 +45,10 @@ public class Usuario extends EntityAbstract<Long> implements Serializable{
     @OneToOne(mappedBy = "usuario")
     private Funcionario funcionario;
 
+    public Usuario(Long id) {
+        this.id = id;
+    }
+
     public Usuario(Perfil perfil, String nome, String senha, Boolean situacao, Proprietario proprietario) {
         this.perfil = perfil;
         this.nome = nome;
