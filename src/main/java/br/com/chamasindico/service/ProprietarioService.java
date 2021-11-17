@@ -9,6 +9,7 @@ import br.com.chamasindico.repository.model.Unidade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -100,5 +101,9 @@ public class ProprietarioService extends ServiceAbstract<Proprietario, IPropriet
         }else {
             throw new ChamaSindicoException("Não foi encontrado síndico para o Condomínio");
         }
+    }
+
+    public List<Proprietario> listarPorCondominio(Long idCondominio) {
+        return repository.findAllByCondominio_Id(idCondominio);
     }
 }

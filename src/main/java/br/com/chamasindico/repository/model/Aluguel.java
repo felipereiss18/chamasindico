@@ -32,6 +32,10 @@ public class Aluguel extends EntityAbstract<Long> implements Serializable {
     )
     private Unidade unidade;
 
+    @ManyToOne
+    @JoinColumn(name = "id_condominio", insertable = false, updatable = false)
+    private Condominio condominio;
+
     @Column(name = "dt_inicio", nullable = false)
     private LocalDate inicio;
 
