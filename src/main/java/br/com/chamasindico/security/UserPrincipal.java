@@ -56,6 +56,8 @@ public class UserPrincipal implements UserDetails {
 
 		}else if (usuario.getProprietario() != null) {
 			condominio = usuario.getProprietario().getUnidade().getId().getBloco().getId().getCondominio().getId();
+		}else if (usuario.getFuncionario() != null) {
+			condominio = usuario.getFuncionario().getCondominio().getId();
 		}
 
 		return new UserPrincipal(
