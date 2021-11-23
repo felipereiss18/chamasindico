@@ -55,7 +55,7 @@ public class ProprietarioRest {
             )
         );
 
-        if (!dto.getSindico()) {
+        if (!dto.getMorador()) {
             proprietario.setEstado(Estado.builder().id(dto.getEstado().getId()).build());
         }
 

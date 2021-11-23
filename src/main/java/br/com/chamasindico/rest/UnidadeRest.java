@@ -168,4 +168,22 @@ public class UnidadeRest {
 
         return ResponseEntity.ok(new ResponseDTO(dto));
     }
+
+    @RoleGlobal
+    @GetMapping("{condominio}/{bloco}/listar")
+    @Transactional(readOnly = true)
+    public ResponseEntity<ResponseDTO> buscarPorCondominoBloco(
+            @PathVariable("condominio") Long idCondominio,
+            @PathVariable("bloco") String bloco
+    ){
+
+        List<UnidadeDTO> lista = service.buscarPorCondominioBloco(idCondominio, bloco).stream()
+                .map(uni -> UnidadeDTO.builder()
+                        .id(uni.getId().getId())
+                        .build()
+                ).collect(Collectors.toList());
+
+
+        return ResponseEntity.ok(new ResponseDTO(lista));
+    }
 }
