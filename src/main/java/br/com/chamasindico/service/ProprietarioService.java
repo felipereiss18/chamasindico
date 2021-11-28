@@ -36,6 +36,10 @@ public class ProprietarioService extends ServiceAbstract<Proprietario, IPropriet
         }
     }
 
+    public Proprietario buscarComoMorador(Long id) {
+        return repository.findByIdAndMoradorIsTrue(id).orElse(null);
+    }
+
     @Override
     public Proprietario salvar(Proprietario proprietario) {
 

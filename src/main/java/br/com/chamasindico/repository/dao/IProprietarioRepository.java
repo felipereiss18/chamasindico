@@ -16,4 +16,6 @@ public interface IProprietarioRepository extends JpaRepository<Proprietario, Lon
     Optional<Proprietario> findBySindicoTrueAndCondominio_Id(Long idCondominio);
 
     List<Proprietario> findAllByCondominio_Id(Long id);
+
+    Optional<Proprietario> findByIdAndMoradorIsTrue(Long id);
 }

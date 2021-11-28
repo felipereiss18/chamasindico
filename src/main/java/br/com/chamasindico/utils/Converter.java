@@ -2,7 +2,9 @@ package br.com.chamasindico.utils;
 
 import br.com.chamasindico.dto.model.*;
 import br.com.chamasindico.dto.pesquisa.AreaComumPesqRespDTO;
+import br.com.chamasindico.enums.Roles;
 import br.com.chamasindico.repository.model.*;
+import br.com.chamasindico.security.UserPrincipal;
 
 import java.util.Comparator;
 import java.util.Optional;
@@ -200,5 +202,54 @@ public class Converter {
                 .id(aluguel.getId())
                 .inquilino(inquilinoDTO)
                 .build();
+    }
+
+    public static OcorrenciaDTO ocorrenciaToDTO(Ocorrencia ocorrencia) {
+        return OcorrenciaDTO.builder()
+                .id(ocorrencia.getId())
+                .blocoCriacao(ocorrencia.getBloco())
+                .unidadeCriacao(ocorrencia.getUnidade())
+                .unidadeDestinatario(ocorrencia.getUnidadeDestinatario() != null ?
+                        ocorrencia.getUnidadeDestinatario().getId().getId() : null)
+                .blocoDestinatario(ocorrencia.getUnidadeDestinatario() != null ?
+                        ocorrencia.getUnidadeDestinatario().getId().getBloco().getId().getId() : null)
+                .criador(buscarNomeCriador(ocorrencia))
+                .descricao(ocorrencia.getDescricao())
+                .resposta(ocorrencia.getResposta())
+                .tipo(ocorrencia.getTipo())
+                .situacao(SituacaoOcorrenciaDTO.builder().
+                        id(ocorrencia.getSituacao().getId())
+                        .descricao(ocorrencia.getSituacao().getDescricao())
+                        .build())
+                .data(ocorrencia.getData())
+                .analise(ocorrencia.getDataAnalise())
+                .conclusao(ocorrencia.getDataConclusao())
+                .build();
+    }
+
+    public static String buscarNomeCriador(Ocorrencia oco) {
+        if(oco.getProprietario() != null) {
+            return oco.getProprietario().getNome();
+        } else if (oco.getInquilino() != null) {
+            return oco.getInquilino().getNome();
+        } else if(oco.getFuncionario() != null) {
+            return oco.getFuncionario().getNome();
+        }
+
+        return "";
+    }
+
+    public static boolean verificarCriador(Ocorrencia ocorrencia, UserPrincipal principal) {
+
+        if (principal.getPerfil().getRole().equals(Roles.PROPRIETARIO.getRole()) ||
+                principal.getPerfil().getRole().equals(Roles.SINDICO.getRole())) {
+            return ocorrencia.getProprietario() != null && ocorrencia.getProprietario().getId().equals(principal.getId());
+        } else if (principal.getPerfil().getRole().equals(Roles.INQUILINO.getRole())) {
+            return ocorrencia.getInquilino() != null && ocorrencia.getInquilino().getId().equals(principal.getId());
+        } else if (principal.getPerfil().getRole().equals(Roles.FUNCIONARIO.getRole())) {
+            return ocorrencia.getFuncionario() != null && ocorrencia.getFuncionario().getId().equals(principal.getId());
+        }
+
+        return false;
     }
 }
