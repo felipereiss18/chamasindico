@@ -252,4 +252,16 @@ public class Converter {
 
         return false;
     }
+
+    public static VisitanteDTO visitanteToDTO(Visitante visitante) {
+        return VisitanteDTO.builder()
+                .documento(visitante.getId())
+                .nome(visitante.getNome())
+                .telefone(visitante.getTelefone())
+                .condominio(CondominioDTO.builder()
+                        .id(visitante.getCondominio().getId())
+                        .nome(visitante.getNome())
+                        .build())
+                .build();
+    }
 }
