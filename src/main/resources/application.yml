@@ -40,7 +40,7 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: chamasindico.contato@gmail.com
-    password:
+    password: chamasindico89
     properties.mail.smtp:
           auth: true
           starttls.enable: true
