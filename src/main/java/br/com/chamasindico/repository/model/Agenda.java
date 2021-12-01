@@ -1,10 +1,7 @@
 package br.com.chamasindico.repository.model;
 
 import com.querydsl.core.annotations.QueryInit;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,6 +12,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 @Entity
 @Table(name = "tb_agenda", schema = "chama_sindico")
 public class Agenda extends EntityAbstract<Long> implements Serializable {
@@ -28,7 +26,7 @@ public class Agenda extends EntityAbstract<Long> implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "id_area_comum", nullable = false)
-    private AreaComum AreaComum;
+    private AreaComum areaComum;
 
     @ManyToOne
     @JoinColumns(value = {
@@ -38,6 +36,10 @@ public class Agenda extends EntityAbstract<Long> implements Serializable {
     })
     @QueryInit({"id.*", "id.bloco.id.*"})
     private Unidade unidade;
+
+    @ManyToOne
+    @JoinColumn(name = "id_condominio", insertable = false, updatable = false)
+    private Condominio condominio;
 
     @Column(name = "data", nullable = false)
     private LocalDate data;

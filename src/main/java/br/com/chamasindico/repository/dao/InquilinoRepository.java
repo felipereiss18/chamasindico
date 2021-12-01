@@ -18,4 +18,5 @@ public interface InquilinoRepository extends JpaRepository<Inquilino, Long>, Que
     Optional<Inquilino> findByUsuario_IdAndUsuario_Situacao(Long idUsuario, boolean situacao);
 
     List<Inquilino> findAllByAluguel_UnidadeAndUsuario_Situacao(Unidade unidade, boolean situacao);
+    Optional<Inquilino> findFirstByAluguel_UnidadeAndUsuario_Situacao(Unidade unidade, boolean situacao);
 }

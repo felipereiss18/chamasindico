@@ -150,6 +150,7 @@ public class Converter {
 
     public static AreaComumDTO areaComumToDto(AreaComum areaComum) {
         return AreaComumDTO.builder()
+                .id(areaComum.getId())
                 .condominio(CondominioDTO.builder()
                         .id(areaComum.getCondominio().getId())
                         .nome(areaComum.getCondominio().getNome())

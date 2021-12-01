@@ -12,6 +12,7 @@ import java.util.List;
 @Builder
 public class AreaComumDTO {
 
+    private Long id;
     private CondominioDTO condominio;
     private BlocoDTO bloco;
     private String nome;
