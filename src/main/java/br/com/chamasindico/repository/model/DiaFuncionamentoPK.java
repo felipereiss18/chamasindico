@@ -1,9 +1,6 @@
 package br.com.chamasindico.repository.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -12,6 +9,7 @@ import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
 @Embeddable
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor

@@ -9,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AreaComumService extends ServiceAbstract<AreaComum, AreaComumRepository> {
 
@@ -49,5 +51,9 @@ public class AreaComumService extends ServiceAbstract<AreaComum, AreaComumReposi
         areaComum.setSituacao(situacao);
 
         super.salvar(areaComum);
+    }
+
+    public List<AreaComum> buscarPorLocacao(Long condominio) {
+        return repository.findAllByCondominio_IdAndLocacaoIsTrueAndSituacaoIsTrue(condominio);
     }
 }

@@ -8,6 +8,7 @@ import br.com.chamasindico.repository.model.AreaComum;
 import br.com.chamasindico.repository.model.Condominio;
 import br.com.chamasindico.security.UserPrincipal;
 import br.com.chamasindico.security.annotation.RoleAdmin;
+import br.com.chamasindico.security.annotation.RoleGlobal;
 import br.com.chamasindico.security.annotation.RoleSindico;
 import br.com.chamasindico.service.AreaComumService;
 import br.com.chamasindico.utils.Converter;
@@ -20,6 +21,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("area-comum")
@@ -104,5 +108,16 @@ public class AreaComumRest {
         service.alterarSituacao(id, situacao);
 
         return ResponseEntity.ok(new ResponseDTO());
+    }
+
+    @RoleGlobal
+    @GetMapping("locacao")
+    public ResponseEntity<ResponseDTO> buscarPermiteLocacao(){
+        UserPrincipal principal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        List<AreaComumDTO> lista = service.buscarPorLocacao(principal.getCondominio()).stream()
+                .map(Converter::areaComumToDto).collect(Collectors.toList());
+
+        return ResponseEntity.ok(new ResponseDTO(lista));
     }
 }
