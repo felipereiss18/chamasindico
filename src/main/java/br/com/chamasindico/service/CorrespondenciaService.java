@@ -5,6 +5,7 @@ import br.com.chamasindico.repository.dao.CorrespondenciaRepository;
 import br.com.chamasindico.repository.dao.IProprietarioRepository;
 import br.com.chamasindico.repository.dao.InquilinoRepository;
 import br.com.chamasindico.repository.model.*;
+import br.com.chamasindico.repository.relatorio.EstatisticaCorrespondenciaTipo;
 import com.querydsl.core.BooleanBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -173,5 +176,24 @@ public class CorrespondenciaService extends ServiceAbstract<Correspondencia, Cor
 
     public List<Correspondencia> buscarAtivaPorUnidade(Unidade unidade) {
         return repository.findAllByUnidadeAndEntregaIsNull(unidade);
+    }
+
+    public List<EstatisticaCorrespondenciaTipo> buscarEstatisticaData(Long condominio, LocalDate inicio, LocalDate fim) {
+
+        List<EstatisticaCorrespondenciaTipo> lista = new ArrayList<>();
+
+        if (inicio == null || fim == null) {
+            lista.add(EstatisticaCorrespondenciaTipo.builder()
+                    .name("Recebida pela Condomínio")
+                    .series(repository.findEstatisticaData(condominio))
+                    .build());
+        }else {
+            lista.add(EstatisticaCorrespondenciaTipo.builder()
+                    .name("Recebida pela Condomínio")
+                    .series(repository.findEstatisticaData(condominio, inicio, fim))
+                    .build());
+        }
+
+        return lista;
     }
 }

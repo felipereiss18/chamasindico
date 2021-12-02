@@ -7,13 +7,12 @@ import br.com.chamasindico.dto.model.FuncionarioDTO;
 import br.com.chamasindico.dto.model.UnidadeDTO;
 import br.com.chamasindico.dto.pesquisa.CorrespondenciaPesqReqDTO;
 import br.com.chamasindico.dto.pesquisa.CorrespondenciaPesqRespDTO;
+import br.com.chamasindico.dto.relatorio.EstatisticaOcorrenciaRelReqDTO;
 import br.com.chamasindico.enums.Roles;
 import br.com.chamasindico.repository.model.*;
+import br.com.chamasindico.repository.relatorio.EstatisticaCorrespondenciaTipo;
 import br.com.chamasindico.security.UserPrincipal;
-import br.com.chamasindico.security.annotation.RoleFuncionario;
-import br.com.chamasindico.security.annotation.RoleGlobal;
-import br.com.chamasindico.security.annotation.RoleInquilino;
-import br.com.chamasindico.security.annotation.RoleProprietario;
+import br.com.chamasindico.security.annotation.*;
 import br.com.chamasindico.service.CorrespondenciaService;
 import br.com.chamasindico.service.InquilinoService;
 import br.com.chamasindico.service.ProprietarioService;
@@ -272,6 +271,19 @@ public class CorrespondenciaRest {
                                 .build()).collect(Collectors.toList());
             }
         }
+
+        return ResponseEntity.ok(new ResponseDTO(lista));
+    }
+
+    @RoleSindico
+    @PostMapping("relatorio/data")
+    public ResponseEntity<ResponseDTO> gerarRelatorioPorData(@RequestBody EstatisticaOcorrenciaRelReqDTO dto) {
+
+        UserPrincipal principal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+
+        List<EstatisticaCorrespondenciaTipo> lista =
+                service.buscarEstatisticaData(principal.getCondominio(), dto.getInicio(), dto.getFim());
 
         return ResponseEntity.ok(new ResponseDTO(lista));
     }
