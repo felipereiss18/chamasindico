@@ -1,7 +1,7 @@
 package br.com.chamasindico.service;
 
+import br.com.chamasindico.repository.dao.OcorrenciaRepository;
 import br.com.chamasindico.repository.dao.SituacaoOcorrenciaRepository;
-import br.com.chamasindico.repository.dao.usuario.OcorrenciaRepository;
 import br.com.chamasindico.repository.model.Ocorrencia;
 import br.com.chamasindico.repository.model.QOcorrencia;
 import br.com.chamasindico.repository.model.SituacaoOcorrencia;

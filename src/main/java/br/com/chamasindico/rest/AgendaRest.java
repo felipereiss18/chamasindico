@@ -4,12 +4,14 @@ import br.com.chamasindico.dto.arquitetura.ResponseDTO;
 import br.com.chamasindico.dto.model.AgendaDTO;
 import br.com.chamasindico.dto.model.AreaComumDTO;
 import br.com.chamasindico.dto.pesquisa.AgendaRespDTO;
+import br.com.chamasindico.dto.relatorio.EstatisticaOcorrenciaRelReqDTO;
 import br.com.chamasindico.enums.Roles;
 import br.com.chamasindico.enums.TipoConfirmacao;
 import br.com.chamasindico.exception.ChamaSindicoException;
 import br.com.chamasindico.repository.model.Agenda;
 import br.com.chamasindico.repository.model.AreaComum;
 import br.com.chamasindico.repository.model.Unidade;
+import br.com.chamasindico.repository.relatorio.EstatisticaAgendaAreaComum;
 import br.com.chamasindico.security.UserPrincipal;
 import br.com.chamasindico.security.annotation.RoleGlobal;
 import br.com.chamasindico.security.annotation.RoleInquilino;
@@ -233,5 +235,15 @@ public class AgendaRest {
         }
 
         return ResponseEntity.ok(new ResponseDTO());
+    }
+
+
+    @RoleSindico
+    @PostMapping("relatorio/area-comum")
+    public ResponseEntity<ResponseDTO> gerarRelatorioPorTipo(@RequestBody EstatisticaOcorrenciaRelReqDTO dto) {
+
+        List<EstatisticaAgendaAreaComum> lista = service.buscarEstatisticaAreaComum(dto.getInicio(),dto.getFim());
+
+        return ResponseEntity.ok(new ResponseDTO(lista));
     }
 }

@@ -1,4 +1,4 @@
-package br.com.chamasindico.repository.dao.usuario;
+package br.com.chamasindico.repository.dao;
 
 import br.com.chamasindico.repository.model.*;
 import br.com.chamasindico.repository.relatorio.EstatisticaOcorrenciaSituacao;

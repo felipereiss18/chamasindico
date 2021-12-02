@@ -8,6 +8,7 @@ import br.com.chamasindico.repository.dao.AreaComumRepository;
 import br.com.chamasindico.repository.dao.IProprietarioRepository;
 import br.com.chamasindico.repository.dao.InquilinoRepository;
 import br.com.chamasindico.repository.model.*;
+import br.com.chamasindico.repository.relatorio.EstatisticaAgendaAreaComum;
 import br.com.chamasindico.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -186,6 +187,14 @@ public class AgendaService extends ServiceAbstract<Agenda, AgendaRepository> {
     public List<Agenda> listarAgendamentoParaConfirmacao(LocalDate data, Unidade unidade) {
         return this.repository.findAllByConfirmacaoIsFalseAndUnidadeAndDataGreaterThanEqualAndAreaComum_TipoConfirmacao
                 (unidade, data, TipoConfirmacao.CONFIRMACAO.getTipo());
+    }
+
+    public List<EstatisticaAgendaAreaComum> buscarEstatisticaAreaComum(LocalDate inicio, LocalDate fim) {
+        if (inicio == null || fim == null) {
+            return this.repository.findEstatisticaPorAreaComum();
+        }else {
+            return this.repository.findEstatisticaPorAreaComum(inicio, fim);
+        }
     }
 
 }
