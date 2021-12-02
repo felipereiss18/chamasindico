@@ -349,8 +349,12 @@ public class OcorrenciaRest {
     @PostMapping("relatorio/tipo")
     public ResponseEntity<ResponseDTO> gerarRelatorioPorTipo(@RequestBody EstatisticaOcorrenciaRelReqDTO dto) {
 
+        UserPrincipal principal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+
         List<EstatisticaOcorrenciaTipoDTO> lista =
                 service.buscarEstatisticaTipo(
+                        principal.getCondominio(),
                         dto.getInicio() != null ? dto.getInicio().atStartOfDay() : null,
                         dto.getFim() != null ? dto.getFim().atStartOfDay() : null)
                         .stream().map(oc ->
@@ -366,8 +370,12 @@ public class OcorrenciaRest {
     @RoleSindico
     @PostMapping("relatorio/situacao")
     public ResponseEntity<ResponseDTO> gerarRelatorioPorSituacao(@RequestBody EstatisticaOcorrenciaRelReqDTO dto){
+        UserPrincipal principal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+
         List<EstatisticaOcorrenciaSituacao> lista =
                 service.buscarEstatisticaSituacao(
+                        principal.getCondominio(),
                         dto.getInicio() != null ? dto.getInicio().atStartOfDay() : null,
                         dto.getFim() != null ? dto.getFim().atStartOfDay() : null);
 

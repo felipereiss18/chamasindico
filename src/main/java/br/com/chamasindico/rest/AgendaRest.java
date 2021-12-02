@@ -242,7 +242,10 @@ public class AgendaRest {
     @PostMapping("relatorio/area-comum")
     public ResponseEntity<ResponseDTO> gerarRelatorioPorTipo(@RequestBody EstatisticaOcorrenciaRelReqDTO dto) {
 
-        List<EstatisticaAgendaAreaComum> lista = service.buscarEstatisticaAreaComum(dto.getInicio(),dto.getFim());
+        UserPrincipal principal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+
+        List<EstatisticaAgendaAreaComum> lista = service.buscarEstatisticaAreaComum(principal.getCondominio(), dto.getInicio(),dto.getFim());
 
         return ResponseEntity.ok(new ResponseDTO(lista));
     }

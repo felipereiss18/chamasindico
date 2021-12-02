@@ -189,11 +189,11 @@ public class AgendaService extends ServiceAbstract<Agenda, AgendaRepository> {
                 (unidade, data, TipoConfirmacao.CONFIRMACAO.getTipo());
     }
 
-    public List<EstatisticaAgendaAreaComum> buscarEstatisticaAreaComum(LocalDate inicio, LocalDate fim) {
+    public List<EstatisticaAgendaAreaComum> buscarEstatisticaAreaComum(Long condominio, LocalDate inicio, LocalDate fim) {
         if (inicio == null || fim == null) {
-            return this.repository.findEstatisticaPorAreaComum();
+            return this.repository.findEstatisticaPorAreaComum(condominio);
         }else {
-            return this.repository.findEstatisticaPorAreaComum(inicio, fim);
+            return this.repository.findEstatisticaPorAreaComum(condominio, inicio, fim);
         }
     }
 

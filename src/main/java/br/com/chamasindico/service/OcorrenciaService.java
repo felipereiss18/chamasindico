@@ -85,19 +85,19 @@ public class OcorrenciaService extends ServiceAbstract<Ocorrencia, OcorrenciaRep
         return this.repository.findAllByUnidadeDestinatarioAndSituacaoIn(unidade, situacoes);
     }
 
-    public List<EstatisticaOcorrenciaTipo> buscarEstatisticaTipo(LocalDateTime inicio, LocalDateTime fim) {
+    public List<EstatisticaOcorrenciaTipo> buscarEstatisticaTipo(Long condominio, LocalDateTime inicio, LocalDateTime fim) {
         if (inicio == null || fim == null) {
-            return this.repository.findEstatisticaPorTipo();
+            return this.repository.findEstatisticaPorTipo(condominio);
         }else {
-            return this.repository.findEstatisticaPorTipo(inicio, fim);
+            return this.repository.findEstatisticaPorTipo(condominio, inicio, fim);
         }
     }
 
-    public List<EstatisticaOcorrenciaSituacao> buscarEstatisticaSituacao(LocalDateTime inicio, LocalDateTime fim) {
+    public List<EstatisticaOcorrenciaSituacao> buscarEstatisticaSituacao(Long condominio, LocalDateTime inicio, LocalDateTime fim) {
         if (inicio == null || fim == null) {
-            return this.repository.findEstatisticaPorSituacao();
+            return this.repository.findEstatisticaPorSituacao(condominio);
         }else {
-            return this.repository.findEstatisticaPorSituacao(inicio, fim);
+            return this.repository.findEstatisticaPorSituacao(condominio, inicio, fim);
         }
     }
 }

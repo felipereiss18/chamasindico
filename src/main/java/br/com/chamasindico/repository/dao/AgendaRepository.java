@@ -26,10 +26,10 @@ public interface AgendaRepository extends JpaRepository<Agenda, Long>, QuerydslP
             (Unidade unidade, LocalDate data, Integer tipo);
 
     @Query("SELECT new br.com.chamasindico.repository.relatorio.EstatisticaAgendaAreaComum(ac.nome, COUNT(a)) " +
-            "FROM Agenda a inner join a.areaComum ac GROUP BY ac.nome")
-    List<EstatisticaAgendaAreaComum> findEstatisticaPorAreaComum();
+            "FROM Agenda a inner join a.areaComum ac WHERE a.condominio.id =:condominio GROUP BY ac.nome")
+    List<EstatisticaAgendaAreaComum> findEstatisticaPorAreaComum(Long condominio);
 
     @Query("SELECT new br.com.chamasindico.repository.relatorio.EstatisticaAgendaAreaComum(ac.nome, COUNT(a)) " +
-            "FROM Agenda a inner join a.areaComum ac WHERE a.data between :inicio AND :fim GROUP BY ac.nome")
-    List<EstatisticaAgendaAreaComum> findEstatisticaPorAreaComum(LocalDate inicio, LocalDate fim);
+            "FROM Agenda a inner join a.areaComum ac WHERE a.condominio.id =:condominio and a.data between :inicio AND :fim GROUP BY ac.nome")
+    List<EstatisticaAgendaAreaComum> findEstatisticaPorAreaComum(Long condominio, LocalDate inicio, LocalDate fim);
 }
