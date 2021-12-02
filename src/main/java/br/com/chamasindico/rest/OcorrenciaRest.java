@@ -5,9 +5,12 @@ import br.com.chamasindico.dto.model.OcorrenciaDTO;
 import br.com.chamasindico.dto.model.SituacaoOcorrenciaDTO;
 import br.com.chamasindico.dto.pesquisa.OcorrenciaPesqReqDTO;
 import br.com.chamasindico.dto.pesquisa.OcorrenciaPesqRespDTO;
+import br.com.chamasindico.dto.relatorio.EstatisticaOcorrenciaRelReqDTO;
+import br.com.chamasindico.dto.relatorio.EstatisticaOcorrenciaTipoDTO;
 import br.com.chamasindico.enums.Roles;
 import br.com.chamasindico.exception.ChamaSindicoException;
 import br.com.chamasindico.repository.model.*;
+import br.com.chamasindico.repository.relatorio.EstatisticaOcorrenciaSituacao;
 import br.com.chamasindico.security.UserPrincipal;
 import br.com.chamasindico.security.annotation.*;
 import br.com.chamasindico.service.InquilinoService;
@@ -342,4 +345,55 @@ public class OcorrenciaRest {
         return null;
     }
 
+    @RoleSindico
+    @PostMapping("relatorio/tipo")
+    public ResponseEntity<ResponseDTO> gerarRelatorioPorTipo(@RequestBody EstatisticaOcorrenciaRelReqDTO dto) {
+
+        UserPrincipal principal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+
+        List<EstatisticaOcorrenciaTipoDTO> lista =
+                service.buscarEstatisticaTipo(
+                        principal.getCondominio(),
+                        dto.getInicio() != null ? dto.getInicio().atStartOfDay() : null,
+                        dto.getFim() != null ? dto.getFim().atStartOfDay() : null)
+                        .stream().map(oc ->
+                            EstatisticaOcorrenciaTipoDTO.builder()
+                                    .name(verificarTipo(oc.getTipo()))
+                                    .value(oc.getQuantidade())
+                                    .build()
+                ).collect(Collectors.toList());
+
+        return ResponseEntity.ok(new ResponseDTO(lista));
+    }
+
+    @RoleSindico
+    @PostMapping("relatorio/situacao")
+    public ResponseEntity<ResponseDTO> gerarRelatorioPorSituacao(@RequestBody EstatisticaOcorrenciaRelReqDTO dto){
+        UserPrincipal principal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+
+        List<EstatisticaOcorrenciaSituacao> lista =
+                service.buscarEstatisticaSituacao(
+                        principal.getCondominio(),
+                        dto.getInicio() != null ? dto.getInicio().atStartOfDay() : null,
+                        dto.getFim() != null ? dto.getFim().atStartOfDay() : null);
+
+        return ResponseEntity.ok(new ResponseDTO(lista));
+    }
+
+    private String verificarTipo(Integer tipo) {
+        switch (tipo) {
+            case 1:
+                return "Barulho";
+            case 2:
+                return "Reparo";
+            case 3:
+                return "Mudança";
+            case 4:
+                return "Outros";
+            default:
+                return "";
+        }
+    }
 }

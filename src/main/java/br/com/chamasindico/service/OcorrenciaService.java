@@ -1,11 +1,13 @@
 package br.com.chamasindico.service;
 
+import br.com.chamasindico.repository.dao.OcorrenciaRepository;
 import br.com.chamasindico.repository.dao.SituacaoOcorrenciaRepository;
-import br.com.chamasindico.repository.dao.usuario.OcorrenciaRepository;
 import br.com.chamasindico.repository.model.Ocorrencia;
 import br.com.chamasindico.repository.model.QOcorrencia;
 import br.com.chamasindico.repository.model.SituacaoOcorrencia;
 import br.com.chamasindico.repository.model.Unidade;
+import br.com.chamasindico.repository.relatorio.EstatisticaOcorrenciaSituacao;
+import br.com.chamasindico.repository.relatorio.EstatisticaOcorrenciaTipo;
 import com.querydsl.core.BooleanBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -80,5 +83,21 @@ public class OcorrenciaService extends ServiceAbstract<Ocorrencia, OcorrenciaRep
 
     public List<Ocorrencia> buscarPorDestinatario(Unidade unidade, List<SituacaoOcorrencia> situacoes) {
         return this.repository.findAllByUnidadeDestinatarioAndSituacaoIn(unidade, situacoes);
+    }
+
+    public List<EstatisticaOcorrenciaTipo> buscarEstatisticaTipo(Long condominio, LocalDateTime inicio, LocalDateTime fim) {
+        if (inicio == null || fim == null) {
+            return this.repository.findEstatisticaPorTipo(condominio);
+        }else {
+            return this.repository.findEstatisticaPorTipo(condominio, inicio, fim);
+        }
+    }
+
+    public List<EstatisticaOcorrenciaSituacao> buscarEstatisticaSituacao(Long condominio, LocalDateTime inicio, LocalDateTime fim) {
+        if (inicio == null || fim == null) {
+            return this.repository.findEstatisticaPorSituacao(condominio);
+        }else {
+            return this.repository.findEstatisticaPorSituacao(condominio, inicio, fim);
+        }
     }
 }
